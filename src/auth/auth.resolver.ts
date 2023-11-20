@@ -1,9 +1,10 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UseGuards } from '@nestjs/common';
 import { RefreshTokenGuard } from 'src/lib/guards';
 import { Public, User, UserID } from 'src/lib/decorators';
 import { Auth, SignInInput, SignUpInput } from './dto';
+import { User as UserModel } from 'src/lib/models';
 
 @Resolver()
 export class AuthResolver {
@@ -34,5 +35,10 @@ export class AuthResolver {
     @User('refreshToken') refreshToken: string,
   ): Promise<Auth> {
     return this.authService.refreshTokens(userId, refreshToken);
+  }
+
+  @Query(() => UserModel)
+  me(@UserID() userId: string): Promise<UserModel> {
+    return this.authService.me(userId);
   }
 }

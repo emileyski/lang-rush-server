@@ -3,6 +3,7 @@ import { verify } from 'argon2';
 import { UserService } from 'src/user/user.service';
 import { TokenService } from './token/token.service';
 import { Auth, SignInInput, SignUpInput } from './dto';
+import { User } from 'src/lib/models';
 
 @Injectable()
 export class AuthService {
@@ -50,5 +51,9 @@ export class AuthService {
     const { accessToken, refreshToken } = await this.tokenService.generate({ id: userId, role });
     
     return { accessToken, refreshToken };
+  }
+
+  me(userId: string): Promise<User> {
+    return this.userService.findOne({ id: userId });
   }
 }
