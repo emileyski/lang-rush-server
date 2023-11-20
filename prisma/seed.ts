@@ -1,19 +1,27 @@
 import { PrismaClient } from '@prisma/client';
 import { createUsers } from './seeds/user.seed';
+import { folders } from './seeds/folder.seed';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const users = await createUsers();
-  
-  for (const user of users) {
-    await prisma.user.upsert({
-      where: { id: user.id },
-      update: {},
-      create: user,
-    });
+  async function upsertData<T>(data: T[], model: string) {
+    const promises = data.map((item) =>
+      prisma[model].upsert({
+        where: { id: item['id'] },
+        update: {},
+        create: item,
+      }),
+    );
+
+    await Promise.all(promises);
+    console.log(`Created ${data.length} ${model}s`);
   }
-  console.log(`Created ${users.length} users`);
+
+  const users = await createUsers();
+
+  await upsertData(users, 'user');
+  await upsertData(folders, 'folder');
 }
 
 main()
