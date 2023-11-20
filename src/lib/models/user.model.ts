@@ -4,10 +4,11 @@ import {
   ObjectType,
   registerEnumType,
 } from '@nestjs/graphql';
-import { Role } from '@prisma/client';
+import { Lang, Role } from '@prisma/client';
 import { Base } from './base.model';
 
 registerEnumType(Role, { name: 'Role' });
+registerEnumType(Lang, { name: 'Lang' });
 
 @ObjectType()
 export class User extends Base {
@@ -22,4 +23,7 @@ export class User extends Base {
 
   @HideField()
   token?: string;
+
+  @Field(() => Lang)
+  nativeLang: Lang;
 }

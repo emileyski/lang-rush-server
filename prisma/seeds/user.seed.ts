@@ -8,11 +8,13 @@ export const createUsers = async () => {
       email: 'default-admin@vlbras.com',
       password: await hash(process.env.DEFAULT_ADMIN_PASSWORD),
       role: 'ADMIN',
+      nativeLang: 'UK',
     },
     {
       id: '9e391faf-64b2-4d4c-b879-463532920fd2',
       email: 'default-customer@vlbras.com',
       password: await hash(process.env.DEFAULT_CUSTOMER_PASSWORD),
+      nativeLang: 'UK',
     },
   ];
 

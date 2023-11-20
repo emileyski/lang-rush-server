@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Role } from '@prisma/client';
+import { Lang, Role } from '@prisma/client';
 import { Transform } from 'class-transformer';
 import { IsEmail, IsEnum, IsOptional, IsString, Length } from 'class-validator';
 
@@ -19,4 +19,8 @@ export class CreateUserInput {
   @IsEnum(Role)
   @IsOptional()
   role?: Role;
+
+  @Field(() => Lang)
+  @IsEnum(Lang)
+  nativeLang: Lang;
 }
