@@ -14,6 +14,7 @@ model User {
   token      String?  @db.VarChar(255)
   role       Role     @default(CUSTOMER)
   nativeLang Lang
+  folders    Folder[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
@@ -28,4 +29,16 @@ enum Lang {
   DE
   FR
   PL
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(32)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([name, userId])
+  @@index([userId])
 }
