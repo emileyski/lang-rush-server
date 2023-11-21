@@ -1,4 +1,4 @@
-import { Lang, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 export const folders: Prisma.FolderUpsertArgs['create'][] = [
   {

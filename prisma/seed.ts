@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { createUsers } from './seeds/user.seed';
-import { folders } from './seeds/folder.seed';
+import { createUsers, folders, words } from './seeds';
 
 const prisma = new PrismaClient();
 
@@ -22,6 +21,7 @@ async function main() {
 
   await upsertData(users, 'user');
   await upsertData(folders, 'folder');
+  await upsertData(words, 'word');
 }
 
 main()
