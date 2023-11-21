@@ -36,9 +36,26 @@ model Folder {
   name      String   @db.VarChar(32)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  words     Word[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([name, userId])
   @@index([userId])
+}
+
+model Word {
+  id          String   @id @default(uuid())
+  word        String   @db.VarChar(24)
+  translation String   @db.VarChar(24)
+  definition  String   @db.VarChar(255)
+  sentences   String[] @db.VarChar(255)
+  progress    Int      @default(0)
+  folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([word, folderId])
+  @@index([folderId])
 }
