@@ -5,5 +5,6 @@ import { PrismaService } from 'src/prisma.service';
 
 @Module({
   providers: [FolderResolver, FolderService, PrismaService],
+  exports: [FolderService],
 })
 export class FolderModule {}
