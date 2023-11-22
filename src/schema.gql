@@ -18,6 +18,14 @@ input CreateUserInput {
   role: Role
 }
 
+input CreateWordInput {
+  definition: String!
+  folderId: ID!
+  sentences: [String!]!
+  translation: String!
+  word: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -28,6 +36,7 @@ type Folder {
   id: ID!
   name: String!
   updatedAt: DateTime!
+  words: [Word!]
 }
 
 input GetUserInput {
@@ -51,21 +60,26 @@ enum Lang {
 type Mutation {
   createFolder(data: CreateFolderInput!): Folder
   createUser(data: CreateUserInput!): User
+  createWord(data: CreateWordInput!): Word
   deleteFolder(id: String!): Boolean
   deleteUser(where: GetUserInput!): Boolean
+  deleteWord(id: String!): Boolean
   logOut: Boolean
   refreshTokens: Auth!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
   updateFolder(data: UpdateFolderInput!, id: String!): Folder
   updateUser(data: UpdateUserInput!, where: GetUserInput!): User
+  updateWord(data: UpdateWordInput!, id: String!): Word
 }
 
 type Query {
+  folder(id: String!): Folder!
   folders: [Folder!]!
   me: User!
   user(where: GetUserInput!): User!
   users(params: GetUsersInput!): [User!]!
+  word(id: String!): Word!
 }
 
 enum Role {
@@ -96,6 +110,13 @@ input UpdateUserInput {
   token: String
 }
 
+input UpdateWordInput {
+  definition: String
+  folderId: ID
+  sentences: [String!]
+  translation: String
+}
+
 type User {
   createdAt: DateTime!
   email: String!
@@ -110,4 +131,15 @@ input WhereUserInput {
   email: String
   id: String
   updatedAt: DateTime
+}
+
+type Word {
+  createdAt: DateTime!
+  definition: String!
+  id: ID!
+  progress: Float!
+  sentences: [String!]!
+  translation: String!
+  updatedAt: DateTime!
+  word: String!
 }
