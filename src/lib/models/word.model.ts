@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Base } from './base.model';
 
 @ObjectType()
@@ -15,6 +15,6 @@ export class Word extends Base {
   @Field(() => [String])
   sentences: string[];
 
-  @Field()
+  @Field(() => Int)
   progress: number;
 }
