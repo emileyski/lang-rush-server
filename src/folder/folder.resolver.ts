@@ -21,6 +21,11 @@ export class FolderResolver {
     return this.folderService.findAll(userId);
   }
 
+  @Query(() => Folder)
+  folder(@Args('id') id: string): Promise<Folder> {
+    return this.folderService.findOne(id);
+  }
+
   @Mutation(() => Folder, { nullable: true })
   async updateFolder(
     @Args('id') id: string,

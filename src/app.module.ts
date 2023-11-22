@@ -9,6 +9,7 @@ import { AccessTokenGuard } from './lib/guards';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { FolderModule } from './folder/folder.module';
+import { WordModule } from './word/word.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { FolderModule } from './folder/folder.module';
     UserModule,
     AuthModule,
     FolderModule,
+    WordModule,
   ],
   providers: [
     PrismaService,

@@ -33,7 +33,12 @@ export class FolderService {
   }
 
   async findOne(id: string): Promise<Folder> {
-    const folder = await this.prisma.folder.findUnique({ where: { id } });
+    const folder = await this.prisma.folder.findUnique({
+      where: { id },
+      include: {
+        words: true,
+      },
+    });
     if (!folder) {
       throw new NotFoundException('Folder not found');
     }
