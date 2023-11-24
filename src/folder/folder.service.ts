@@ -20,7 +20,12 @@ export class FolderService {
         },
       });
     } catch (error) {
-      throw new ConflictException('Folder with this name already exists');
+      if (error.code === 'P2002') {
+        throw new ConflictException('Folder with this name already exists');
+      } else if (error.code === 'P2003') {
+        throw new NotFoundException('User not found');
+      }
+      throw error;
     }
   }
 
