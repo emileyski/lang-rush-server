@@ -21,7 +21,7 @@ export class FolderService {
       });
     } catch (error) {
       if (error.code === 'P2002') {
-        throw new ConflictException('Folder with this name already exists');
+        throw new ConflictException('This folder already exists');
       } else if (error.code === 'P2003') {
         throw new NotFoundException('User not found');
       }
