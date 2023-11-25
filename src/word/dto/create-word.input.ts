@@ -1,19 +1,18 @@
 import { BadRequestException } from '@nestjs/common';
 import { Field, ID, InputType } from '@nestjs/graphql';
 import { Transform } from 'class-transformer';
-import { ArrayMaxSize, ArrayNotEmpty, IsAlpha, Length } from 'class-validator';
+import { ArrayMaxSize, ArrayNotEmpty, Length, Matches } from 'class-validator';
+import { TranslateWordInput } from './translate-word.input';
+import { WordType } from '@prisma/client';
 
 @InputType()
-export class CreateWordInput {
-  @Field()
-  @IsAlpha()
-  @Length(1, 24)
-  @Transform(({ value }) => value.toLowerCase())
-  word: string;
-
+export class CreateWordInput extends TranslateWordInput {
   @Field()
   @Length(1, 24)
   @Transform(({ value }) => value.toLowerCase())
+  @Matches(/^\p{L}+$/u, {
+    message: 'Translation must only contain letters.',
+  })
   translation: string;
 
   @Field()
@@ -27,6 +26,9 @@ export class CreateWordInput {
   @Length(1, 255, { each: true })
   @Transform(({ value }) => value.map((v: string) => transformSentence(v)))
   sentences: string[];
+
+  @Field(() => WordType)
+  type: WordType;
 
   @Field(() => ID)
   folderId: string;
