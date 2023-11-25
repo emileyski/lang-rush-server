@@ -2,6 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input Answer {
+  answer: String!
+  wordId: String!
+}
+
+input AnswersInput {
+  answers: [Answer!]!
+  folderId: String!
+  quizType: QuizType!
+}
+
 type Auth {
   accessToken: String!
   refreshToken: String!
@@ -23,6 +34,7 @@ input CreateWordInput {
   folderId: ID!
   sentences: [String!]!
   translation: String!
+  type: WordType!
   word: String!
 }
 
@@ -58,6 +70,7 @@ enum Lang {
 }
 
 type Mutation {
+  answers(data: AnswersInput!): [Word!]!
   createFolder(data: CreateFolderInput!): Folder
   createUser(data: CreateUserInput!): User
   createWord(data: CreateWordInput!): Word
@@ -77,9 +90,33 @@ type Query {
   folder(id: String!): Folder!
   folders: [Folder!]!
   me: User!
+  questions(data: QuestionsInput!): Quiz!
+  translateWord(data: TranslateWordInput!): String!
   user(where: GetUserInput!): User!
   users(params: GetUsersInput!): [User!]!
   word(id: String!): Word!
+}
+
+type Question {
+  question: String!
+  wordId: String!
+  wordType: WordType!
+}
+
+input QuestionsInput {
+  folderId: String!
+  quizType: QuizType!
+}
+
+type Quiz {
+  folderId: String!
+  questions: [Question!]!
+  type: QuizType!
+}
+
+enum QuizType {
+  DEFINITION_WORD
+  WORD_TRANSLATION
 }
 
 enum Role {
@@ -96,6 +133,10 @@ input SignUpInput {
   email: String!
   nativeLang: Lang!
   password: String!
+}
+
+input TranslateWordInput {
+  word: String!
 }
 
 input UpdateFolderInput {
@@ -115,6 +156,7 @@ input UpdateWordInput {
   folderId: ID!
   sentences: [String!]!
   translation: String!
+  type: WordType!
 }
 
 type User {
@@ -140,6 +182,17 @@ type Word {
   progress: Int!
   sentences: [String!]!
   translation: String!
+  type: WordType!
   updatedAt: DateTime!
   word: String!
+}
+
+enum WordType {
+  ADJECTIVE
+  ADVERB
+  INTERJECTION
+  NOUN
+  PREPOSITION
+  PRONOUN
+  VERB
 }

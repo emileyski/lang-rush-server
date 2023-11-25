@@ -10,6 +10,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { FolderModule } from './folder/folder.module';
 import { WordModule } from './word/word.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { WordModule } from './word/word.module';
     AuthModule,
     FolderModule,
     WordModule,
+    QuizModule,
   ],
   providers: [
     PrismaService,
