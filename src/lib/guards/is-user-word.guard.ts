@@ -14,15 +14,15 @@ export class IsUserWordGuard extends IsUserModelGuard {
 
     await this.isValidUUID(args.id);
 
-    const { folderId } = await this.prisma.word.findUnique({
+    const word = await this.prisma.word.findUnique({
       where: { id: args.id },
       select: { folderId: true },
     });
 
-    if (!folderId) {
+    if (!word?.folderId) {
       throw new NotFoundException('Word not found');
     }
 
-    return folderId;
+    return word.folderId;
   }
 }
