@@ -3,6 +3,8 @@ import { WordService } from './word.service';
 import { Word } from 'src/lib/models';
 import { CreateWordInput, TranslateWordInput, UpdateWordInput } from './dto';
 import { UserID } from 'src/lib/decorators';
+import { UseGuards } from '@nestjs/common';
+import { IsUserFolderGuard, IsUserWordGuard } from 'src/lib/guards';
 
 @Resolver()
 export class WordResolver {
@@ -16,17 +18,20 @@ export class WordResolver {
     return this.wordService.translateWord(data.word, userId);
   }
 
-  @Mutation(() => Word, { nullable: true })
+  @Mutation(() => Word)
+  @UseGuards(IsUserFolderGuard)
   async createWord(@Args('data') data: CreateWordInput): Promise<Word> {
     return this.wordService.create(data);
   }
 
   @Query(() => Word)
+  @UseGuards(IsUserWordGuard)
   async word(@Args('id') id: string): Promise<Word> {
     return this.wordService.findOne(id);
   }
 
-  @Mutation(() => Word, { nullable: true })
+  @Mutation(() => Word)
+  @UseGuards(IsUserWordGuard)
   async updateWord(
     @Args('id') id: string,
     @Args('data') data: UpdateWordInput,
@@ -35,6 +40,7 @@ export class WordResolver {
   }
 
   @Mutation(() => Boolean, { nullable: true })
+  @UseGuards(IsUserWordGuard)
   async deleteWord(@Args('id') id: string): Promise<void> {
     await this.wordService.delete(id);
   }

@@ -3,12 +3,14 @@ import { FolderService } from './folder.service';
 import { Folder } from 'src/lib/models';
 import { UserID } from 'src/lib/decorators';
 import { CreateFolderInput, UpdateFolderInput } from './dto';
+import { UseGuards } from '@nestjs/common';
+import { IsUserFolderGuard } from 'src/lib/guards';
 
 @Resolver()
 export class FolderResolver {
   constructor(private readonly folderService: FolderService) {}
 
-  @Mutation(() => Folder, { nullable: true })
+  @Mutation(() => Folder)
   async createFolder(
     @UserID() userId: string,
     @Args('data') data: CreateFolderInput,
@@ -22,11 +24,13 @@ export class FolderResolver {
   }
 
   @Query(() => Folder)
+  @UseGuards(IsUserFolderGuard)
   folder(@Args('id') id: string): Promise<Folder> {
     return this.folderService.findOne(id);
   }
 
-  @Mutation(() => Folder, { nullable: true })
+  @Mutation(() => Folder)
+  @UseGuards(IsUserFolderGuard)
   async updateFolder(
     @Args('id') id: string,
     @Args('data') data: UpdateFolderInput,
@@ -35,7 +39,8 @@ export class FolderResolver {
   }
 
   @Mutation(() => Boolean, { nullable: true })
-  async deleteFolder(@Args('id') id: string): Promise<void> {
+  @UseGuards(IsUserFolderGuard)
+  deleteFolder(@Args('id') id: string): Promise<void> {
     return this.folderService.delete(id);
   }
 }

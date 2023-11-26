@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Word } from 'src/lib/models';
 import { PrismaService } from 'src/prisma.service';
 import { Prisma } from '@prisma/client';
@@ -12,13 +16,15 @@ export class QuizService {
     const { folderId, quizType } = data;
     const questionField = quizType.toLowerCase().split('_')[0];
 
-    const count = await this.prisma.word.count({
-      where: { folderId },
+    const folder = await this.prisma.folder.findUnique({
+      where: { id: folderId },
+      select: { _count: { select: { words: true } } },
     });
 
-    if (count < 5) {
-      throw new BadRequestException('Not enough words');
-    }
+    if (!folder) throw new NotFoundException('Folder not found');
+
+    const count = folder._count.words;
+    if (count < 5) throw new BadRequestException('Not enough words');
 
     const field = Prisma.sql([questionField]);
     const questions: Question[] = await this.prisma.$queryRaw<Question[]>`

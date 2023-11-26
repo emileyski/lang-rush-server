@@ -71,9 +71,9 @@ enum Lang {
 
 type Mutation {
   answers(data: AnswersInput!): [Word!]!
-  createFolder(data: CreateFolderInput!): Folder
+  createFolder(data: CreateFolderInput!): Folder!
   createUser(data: CreateUserInput!): User
-  createWord(data: CreateWordInput!): Word
+  createWord(data: CreateWordInput!): Word!
   deleteFolder(id: String!): Boolean
   deleteUser(where: GetUserInput!): Boolean
   deleteWord(id: String!): Boolean
@@ -81,9 +81,9 @@ type Mutation {
   refreshTokens: Auth!
   signIn(data: SignInInput!): Auth!
   signUp(data: SignUpInput!): Auth!
-  updateFolder(data: UpdateFolderInput!, id: String!): Folder
+  updateFolder(data: UpdateFolderInput!, id: String!): Folder!
   updateUser(data: UpdateUserInput!, where: GetUserInput!): User
-  updateWord(data: UpdateWordInput!, id: String!): Word
+  updateWord(data: UpdateWordInput!, id: String!): Word!
 }
 
 type Query {

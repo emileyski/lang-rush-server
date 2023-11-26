@@ -4,8 +4,11 @@ import { Quiz } from './dto/quiz.response';
 import { QuestionsInput } from './dto/questions.input';
 import { AnswersInput } from './dto/answers.input';
 import { Word } from 'src/lib/models';
+import { UseGuards } from '@nestjs/common';
+import { IsUserFolderGuard } from 'src/lib/guards';
 
 @Resolver()
+@UseGuards(IsUserFolderGuard)
 export class QuizResolver {
   constructor(private readonly quizService: QuizService) {}
 
