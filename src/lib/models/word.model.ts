@@ -1,8 +1,8 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Base } from './base.model';
-import { WordType } from '@prisma/client';
+import { WordForm } from '@prisma/client';
 
-registerEnumType(WordType, { name: 'WordType' });
+registerEnumType(WordForm, { name: 'WordForm' });
 
 @ObjectType()
 export class Word extends Base {
@@ -21,6 +21,6 @@ export class Word extends Base {
   @Field(() => Int)
   progress: number;
 
-  @Field(() => WordType)
-  type: WordType;
+  @Field(() => WordForm)
+  form: WordForm;
 }

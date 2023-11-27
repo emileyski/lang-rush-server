@@ -51,22 +51,19 @@ model Word {
   definition  String   @db.VarChar(255)
   sentences   String[] @db.VarChar(255)
   progress    Int      @default(0)
-  type        WordType
+  form        WordForm
   folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@unique([word, folderId, type])
+  @@unique([word, folderId, form])
   @@index([folderId])
 }
 
-enum WordType {
+enum WordForm {
   NOUN
-  VERB
   ADJECTIVE
+  VERB
   ADVERB
-  PRONOUN
-  PREPOSITION
-  INTERJECTION
 }

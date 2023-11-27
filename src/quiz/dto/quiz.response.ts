@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { WordType } from '@prisma/client';
+import { WordForm } from '@prisma/client';
 import { IsUUID } from 'class-validator';
 import { QuizType } from 'src/lib/enum';
 
@@ -24,6 +24,6 @@ export class Question {
   @Field()
   question: string;
 
-  @Field(() => WordType)
-  wordType: WordType;
+  @Field(() => WordForm)
+  wordForm: WordForm;
 }

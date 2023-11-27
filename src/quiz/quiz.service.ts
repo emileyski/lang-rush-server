@@ -31,7 +31,7 @@ export class QuizService {
       SELECT 
         "id" AS "wordId", 
         ${field} AS "question", 
-        "type" AS "wordType"
+        "form" AS "wordForm"
       FROM "Word"
       WHERE "folderId" = ${folderId}
       AND "progress" = (

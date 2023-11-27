@@ -3,7 +3,7 @@ import { Field, ID, InputType } from '@nestjs/graphql';
 import { Transform } from 'class-transformer';
 import { ArrayMaxSize, ArrayNotEmpty, Length, Matches } from 'class-validator';
 import { TranslateWordInput } from './translate-word.input';
-import { WordType } from '@prisma/client';
+import { WordForm } from '@prisma/client';
 
 @InputType()
 export class CreateWordInput extends TranslateWordInput {
@@ -27,8 +27,8 @@ export class CreateWordInput extends TranslateWordInput {
   @Transform(({ value }) => value.map((v: string) => transformSentence(v)))
   sentences: string[];
 
-  @Field(() => WordType)
-  type: WordType;
+  @Field(() => WordForm)
+  form: WordForm;
 
   @Field(() => ID)
   folderId: string;

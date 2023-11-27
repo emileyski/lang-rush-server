@@ -32,9 +32,9 @@ input CreateUserInput {
 input CreateWordInput {
   definition: String!
   folderId: ID!
+  form: WordForm!
   sentences: [String!]!
   translation: String!
-  type: WordType!
   word: String!
 }
 
@@ -99,8 +99,8 @@ type Query {
 
 type Question {
   question: String!
+  wordForm: WordForm!
   wordId: String!
-  wordType: WordType!
 }
 
 input QuestionsInput {
@@ -154,9 +154,9 @@ input UpdateUserInput {
 input UpdateWordInput {
   definition: String!
   folderId: ID!
+  form: WordForm!
   sentences: [String!]!
   translation: String!
-  type: WordType!
 }
 
 type User {
@@ -178,21 +178,18 @@ input WhereUserInput {
 type Word {
   createdAt: DateTime!
   definition: String!
+  form: WordForm!
   id: ID!
   progress: Int!
   sentences: [String!]!
   translation: String!
-  type: WordType!
   updatedAt: DateTime!
   word: String!
 }
 
-enum WordType {
+enum WordForm {
   ADJECTIVE
   ADVERB
-  INTERJECTION
   NOUN
-  PREPOSITION
-  PRONOUN
   VERB
 }

@@ -1,4 +1,4 @@
-import { Prisma, WordType } from '@prisma/client';
+import { Prisma, WordForm } from '@prisma/client';
 import { folders } from './folder.seed';
 
 const wordsData = [
@@ -8,11 +8,11 @@ const wordsData = [
     definition:
       'A way of discovering, by questions or practical activities, what someone knows, or what someone or something can do or is like.',
     sentences: [
-      'The class are having a spelling __ today.',
-      'She had to take an aptitude __ before she got the job.',
-      "The doctors have done some __s to try and find out what's wrong with her.",
+      'The class are having a spelling test today.',
+      'She had to take an aptitude test before she got the job.',
+      "The doctors have done some tests to try and find out what's wrong with her.",
     ],
-    type: WordType.NOUN,
+    form: WordForm.NOUN,
   },
   {
     word: 'telephone',
@@ -20,11 +20,11 @@ const wordsData = [
     definition:
       'A piece of electronic equipment that makes it possible for you to speak to someone in another place who has similar equipment.',
     sentences: [
-      'She spends hours and hours on the __.',
-      'She hurried to answer the __.',
-      'I like to have a __ at my bedside.',
+      'She spends hours and hours on the telephone.',
+      'She hurried to answer the telephone.',
+      'I like to have a telephone at my bedside.',
     ],
-    type: WordType.NOUN,
+    form: WordForm.NOUN,
   },
 ];
 
