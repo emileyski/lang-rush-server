@@ -33,6 +33,10 @@ input CreateWordInput {
   definition: String!
   folderId: ID!
   form: WordForm!
+  otherAdjs: [String!]
+  otherAdvs: [String!]
+  otherNouns: [String!]
+  otherVerbs: [String!]
   sentences: [String!]!
   translation: String!
   word: String!
@@ -155,6 +159,10 @@ input UpdateWordInput {
   definition: String!
   folderId: ID!
   form: WordForm!
+  otherAdjs: [String!]
+  otherAdvs: [String!]
+  otherNouns: [String!]
+  otherVerbs: [String!]
   sentences: [String!]!
   translation: String!
 }
@@ -180,6 +188,10 @@ type Word {
   definition: String!
   form: WordForm!
   id: ID!
+  otherAdjs: [String!]!
+  otherAdvs: [String!]!
+  otherNouns: [String!]!
+  otherVerbs: [String!]!
   progress: Int!
   sentences: [String!]!
   translation: String!

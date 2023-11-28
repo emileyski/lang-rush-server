@@ -52,6 +52,10 @@ model Word {
   sentences   String[] @db.VarChar(255)
   progress    Int      @default(0)
   form        WordForm
+  otherNouns  String[] @default([]) @db.VarChar(24)
+  otherAdjs   String[] @default([]) @db.VarChar(24)
+  otherVerbs  String[] @default([]) @db.VarChar(24)
+  otherAdvs   String[] @default([]) @db.VarChar(24)
   folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    String
   createdAt   DateTime @default(now())

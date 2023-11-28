@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Word" ALTER COLUMN "otherForms" DROP NOT NULL,
+ALTER COLUMN "otherForms" DROP DEFAULT;

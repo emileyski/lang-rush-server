@@ -23,4 +23,16 @@ export class Word extends Base {
 
   @Field(() => WordForm)
   form: WordForm;
+
+  @Field(() => [String])
+  otherNouns: string[];
+
+  @Field(() => [String])
+  otherAdjs: string[];
+
+  @Field(() => [String])
+  otherVerbs: string[];
+
+  @Field(() => [String])
+  otherAdvs: string[];
 }
