@@ -1,6 +1,9 @@
 import { Prisma, WordForm } from '@prisma/client';
 import { folders } from './folder.seed';
 
+const region = process.env.AWS_REGION || '';
+const bucket = process.env.AWS_BUCKET_NAME || '';
+
 const wordsData = [
   {
     word: 'test',
@@ -13,6 +16,7 @@ const wordsData = [
       "The doctors have done some tests to try and find out what's wrong with her.",
     ],
     form: WordForm.NOUN,
+    audioUrl: `https://${bucket}.s3.${region}.amazonaws.com/test.mp3`,
   },
   {
     word: 'telephone',
@@ -24,6 +28,7 @@ const wordsData = [
       'She hurried to answer the telephone.',
       'I like to have a telephone at my bedside.',
     ],
+    audioUrl: `https://${bucket}.s3.${region}.amazonaws.com/telephone.mp3`,
     form: WordForm.NOUN,
   },
 ];

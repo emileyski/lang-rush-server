@@ -12,6 +12,7 @@ import { FolderModule } from './folder/folder.module';
 import { WordModule } from './word/word.module';
 import { QuizModule } from './quiz/quiz.module';
 import { graphQLExceptionFormat } from './lib/exceptions';
+import { AudioModule } from './audio/audio.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { graphQLExceptionFormat } from './lib/exceptions';
     FolderModule,
     WordModule,
     QuizModule,
+    AudioModule,
   ],
   providers: [
     PrismaService,

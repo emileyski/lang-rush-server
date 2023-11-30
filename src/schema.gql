@@ -184,6 +184,7 @@ input WhereUserInput {
 }
 
 type Word {
+  audioUrl: String!
   createdAt: DateTime!
   definition: String!
   form: WordForm!

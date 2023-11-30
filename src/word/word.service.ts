@@ -4,12 +4,14 @@ import { CreateWordInput, UpdateWordInput } from './dto';
 import { Word } from 'src/lib/models';
 import * as translate from 'translate';
 import { UserService } from 'src/user/user.service';
+import { AudioService } from 'src/audio/audio.service';
 
 @Injectable()
 export class WordService {
   constructor(
     private prisma: PrismaService,
     private userService: UserService,
+    private audioService: AudioService,
   ) {}
 
   async translateWord(word: string, userId: string): Promise<string> {
@@ -17,7 +19,13 @@ export class WordService {
     return translate(word, nativeLang);
   }
 
-  create(data: CreateWordInput): Promise<Word> {
+  async create(createWordInput: CreateWordInput): Promise<Word> {
+    const data: CreateWordInput & { audioUrl?: string } = {
+      ...createWordInput,
+    };
+    if (process.env.NODE_ENV === 'prod') {
+      data.audioUrl = await this.audioService.getUrl(data.word);
+    }
     return this.prisma.word.create({ data });
   }
 

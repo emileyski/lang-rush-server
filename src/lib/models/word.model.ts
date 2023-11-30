@@ -35,4 +35,7 @@ export class Word extends Base {
 
   @Field(() => [String])
   otherAdvs: string[];
+
+  @Field()
+  audioUrl: string;
 }
