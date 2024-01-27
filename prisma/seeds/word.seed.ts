@@ -16,7 +16,6 @@ const wordsData = [
       "The doctors have done some tests to try and find out what's wrong with her.",
     ],
     form: WordForm.NOUN,
-    audioUrl: `https://${bucket}.s3.${region}.amazonaws.com/test.mp3`,
   },
   {
     word: 'telephone',
@@ -28,7 +27,6 @@ const wordsData = [
       'She hurried to answer the telephone.',
       'I like to have a telephone at my bedside.',
     ],
-    audioUrl: `https://${bucket}.s3.${region}.amazonaws.com/telephone.mp3`,
     form: WordForm.NOUN,
   },
 ];
@@ -38,10 +36,15 @@ export const words: Prisma.WordUpsertArgs['create'][] = [];
 wordsData.forEach((wordData, index) => {
   folders.forEach((folder, i) => {
     const id = `9e391faf-64b2-4d4c-b879-463532920f${index}${i}`;
+    let audioUrl = process.env.DEV_WORD_AUDIO_URL;
+    if (process.env.NODE_ENV === 'prod') {
+      audioUrl = `https://${bucket}.s3.${region}.amazonaws.com/${wordData.word}.mp3`;
+    }
     words.push({
       id,
       ...wordData,
       folderId: folder.id,
+      audioUrl,
     });
   });
 });

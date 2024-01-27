@@ -9,9 +9,9 @@ import { AudioService } from 'src/audio/audio.service';
 @Injectable()
 export class WordService {
   constructor(
-    private prisma: PrismaService,
-    private userService: UserService,
-    private audioService: AudioService,
+    private readonly prisma: PrismaService,
+    private readonly userService: UserService,
+    private readonly audioService: AudioService,
   ) {}
 
   async translateWord(word: string, userId: string): Promise<string> {
@@ -20,8 +20,9 @@ export class WordService {
   }
 
   async create(createWordInput: CreateWordInput): Promise<Word> {
-    const data: CreateWordInput & { audioUrl?: string } = {
+    const data: CreateWordInput & { audioUrl: string } = {
       ...createWordInput,
+      audioUrl: process.env.DEV_WORD_AUDIO_URL,
     };
     if (process.env.NODE_ENV === 'prod') {
       data.audioUrl = await this.audioService.getUrl(data.word);

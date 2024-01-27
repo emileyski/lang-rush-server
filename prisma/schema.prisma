@@ -56,7 +56,7 @@ model Word {
   otherAdjs   String[] @default([]) @db.VarChar(24)
   otherVerbs  String[] @default([]) @db.VarChar(24)
   otherAdvs   String[] @default([]) @db.VarChar(24)
-  audioUrl    String   @db.VarChar(255) @default("")
+  audioUrl    String   @db.VarChar(255)
   folder      Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId    String
   createdAt   DateTime @default(now())
