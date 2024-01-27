@@ -1,7 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,29 +12,13 @@ import {
 } from './dto';
 import { User } from 'src/lib/models';
 import { hash } from 'argon2';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private prisma: PrismaService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll(params: GetUsersInput): Promise<User[]> {
-    if (Object.keys(params).length !== 0) {
-      return this.prisma.user.findMany(params);
-    }
-
-    const cachedUsers = await this.cacheManager.get<User[]>('users');
-    if (cachedUsers) {
-      return cachedUsers;
-    }
-
-    const users = await this.prisma.user.findMany();
-    await this.cacheManager.set('users', users);
-    return users;
+    return this.prisma.user.findMany(params);
   }
 
   async findOne(where: GetUserInput): Promise<User> {
@@ -54,14 +36,8 @@ export class UserService {
   }
 
   async create(data: CreateUserInput): Promise<User> {
-    try {
-      data.password = await hash(data.password);
-      const user = await this.prisma.user.create({ data });
-      await this.cacheManager.del('users');
-      return user;
-    } catch (error) {
-      throw new ConflictException('User with this email already exists');
-    }
+    data.password = await hash(data.password);
+    return this.prisma.user.create({ data });
   }
 
   async update(where: GetUserInput, data: UpdateUserInput): Promise<User> {
@@ -75,18 +51,11 @@ export class UserService {
       data.password = await hash(data.password);
     }
 
-    try {
-      const user = await this.prisma.user.update({ where, data });
-      await this.cacheManager.del('users');
-      return user;
-    } catch (error) {
-      throw new ConflictException('User with this email already exists');
-    }
+    return this.prisma.user.update({ where, data });
   }
 
   async delete(where: GetUserInput): Promise<void> {
     await this.findOne(where);
     await this.prisma.user.delete({ where });
-    await this.cacheManager.del('users');
   }
 }

@@ -7,10 +7,4 @@ services:
     env_file:
       - .env
     ports:
-      - '${DB_PORT}:${DB_PORT}'
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    ports:
-      - '${REDIS_PORT}:${REDIS_PORT}'
+      - '5432:5432'

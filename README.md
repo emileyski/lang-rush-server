@@ -3,10 +3,6 @@
 ## Getting started
 
 ```bash
-# Clone the repository or click "Use this template"
-$ git clone https://github.com/vlbras/awesome-nest-rbac-graphql my-awesome-app
-$ cd my-awesome-app
-
 # Install packages
 $ pnpm install
 ```
@@ -17,7 +13,7 @@ $ pnpm install
 # configure .env
 $ cp .env.example .env
 
-# run local postres and redis
+# run local postres
 $ docker-compose up -d
 
 # generate prisma client
